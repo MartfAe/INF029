@@ -62,7 +62,8 @@ void getDadosListaEncadeadaComCabecote(No *inicio, int vetorAux[]);
 void destruirListaEncadeadaComCabecote(No **inicio);
 
 // Funções para salvar e carregar dados
-estruturaAuxiliar *carregarDadosArquivo(const char *nomeArquivo);
+
+int carregarDadosArquivo(const char *nomeArquivo); 
 void salvarDadosArquivo(estruturaAuxiliar *estrutura, int tamanho, const char *nomeArquivo);
 
 #endif // TRABALHO2_ESTRUTURAVETORES_H

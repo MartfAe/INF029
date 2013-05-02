@@ -9,7 +9,7 @@ estruturaAuxiliar *estruturaPrincipal;
 
 /* Inicializa a estrutura principal, criando o arquivo de dados se necessário,
    aloca dinamicamente o vetor de estruturas e carrega os dados do arquivo. */
-void inicializar() {
+   void inicializar() {
     const char *arquivo = "dados.txt";
     FILE *fp = fopen(arquivo, "r");
 
@@ -39,47 +39,43 @@ void inicializar() {
     carregarDadosArquivo(arquivo);
 }
 
+
 /* Cria uma estrutura auxiliar na posição 'posicao' com tamanho 'tamanho' */
 int criarEstruturaAuxiliar(int posicao, int tamanho) {
-    if (posicao < 1 || posicao > TAM)
-        return POSICAO_INVALIDA;
-    if (tamanho < 1)
-        return TAMANHO_INVALIDO;
-    if (estruturaPrincipal[posicao - 1].dados != NULL)
-        return JA_TEM_ESTRUTURA_AUXILIAR;
+    if (posicao < 1 || posicao > TAM) return POSICAO_INVALIDA; // Verificação direta
+    if (estruturaPrincipal[posicao - 1].dados != NULL) return JA_TEM_ESTRUTURA_AUXILIAR;
+    if (tamanho < 1) return TAMANHO_INVALIDO;
 
     estruturaPrincipal[posicao - 1].dados = (int *)malloc(tamanho * sizeof(int));
-    if (estruturaPrincipal[posicao - 1].dados == NULL)
-        return SEM_ESPACO_DE_MEMORIA;
+    if (estruturaPrincipal[posicao - 1].dados == NULL) return SEM_ESPACO_DE_MEMORIA;
 
     estruturaPrincipal[posicao - 1].tamanho = tamanho;
     estruturaPrincipal[posicao - 1].qtd = 0;
     return SUCESSO;
 }
 
+
 /* Insere o valor 'valor' na estrutura auxiliar da posição 'posicao' */
 int inserirNumeroEmEstrutura(int posicao, int valor) {
-    if (posicao < 1 || posicao > TAM)
-        return POSICAO_INVALIDA;
-    if (estruturaPrincipal[posicao - 1].dados == NULL)
-        return SEM_ESTRUTURA_AUXILIAR;
-    if (estruturaPrincipal[posicao - 1].qtd >= estruturaPrincipal[posicao - 1].tamanho)
-        return SEM_ESPACO;
+    if (posicao < 1 || posicao > TAM) return POSICAO_INVALIDA; 
+    if (estruturaPrincipal[posicao - 1].dados == NULL) return SEM_ESTRUTURA_AUXILIAR;
+    if (estruturaPrincipal[posicao - 1].qtd >= estruturaPrincipal[posicao - 1].tamanho) return SEM_ESPACO;
 
     estruturaPrincipal[posicao - 1].dados[estruturaPrincipal[posicao - 1].qtd++] = valor;
+    salvarDadosArquivo(estruturaPrincipal, TAM, "dados.txt");
     return SUCESSO;
 }
-
 /* Exclui o último número da estrutura auxiliar da posição 'posicao' */
 int excluirNumeroDoFinaldaEstrutura(int posicao) {
-    if (posicao < 1 || posicao > TAM)
+    if (posicao < 1 || posicao > TAM) 
         return POSICAO_INVALIDA;
-    if (estruturaPrincipal[posicao - 1].dados == NULL)
+    if (estruturaPrincipal[posicao - 1].dados == NULL) 
         return SEM_ESTRUTURA_AUXILIAR;
-    if (estruturaPrincipal[posicao - 1].qtd == 0)
+    if (estruturaPrincipal[posicao - 1].qtd == 0) 
         return ESTRUTURA_AUXILIAR_VAZIA;
 
     estruturaPrincipal[posicao - 1].qtd--;
+    salvarDadosArquivo(estruturaPrincipal, TAM, "dados.txt");
     return SUCESSO;
 }
 
@@ -105,6 +101,8 @@ int excluirNumeroEspecificoDeEstrutura(int posicao, int valor) {
         estruturaPrincipal[posicao - 1].dados[i] = estruturaPrincipal[posicao - 1].dados[i+1];
     }
     estruturaPrincipal[posicao - 1].qtd--;
+
+    salvarDadosArquivo(estruturaPrincipal, TAM, "dados.txt");
     return SUCESSO;
 }
 
@@ -118,6 +116,8 @@ int getDadosEstruturaAuxiliar(int posicao, int vetorAux[]) {
     for (int i = 0; i < estruturaPrincipal[posicao - 1].qtd; i++) {
         vetorAux[i] = estruturaPrincipal[posicao - 1].dados[i];
     }
+
+
     return SUCESSO;
 }
 
@@ -209,6 +209,8 @@ int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho) {
     estruturaPrincipal[posicao - 1].tamanho = novoTam;
     if (estruturaPrincipal[posicao - 1].qtd > novoTam)
         estruturaPrincipal[posicao - 1].qtd = novoTam;
+
+    salvarDadosArquivo(estruturaPrincipal, TAM, "dados.txt");
     return SUCESSO;
 }
 
@@ -289,24 +291,34 @@ void destruirListaEncadeadaComCabecote(No **inicio) {
 /* Carrega os dados do arquivo 'nomeArquivo' para as estruturas auxiliares.
    Para cada linha, lê o tamanho e a quantidade de elementos, cria a estrutura
    e insere os elementos lidos. */
-estruturaAuxiliar *carregarDadosArquivo(const char *nomeArquivo) {
+   int carregarDadosArquivo(const char *nomeArquivo){
     FILE *fp = fopen(nomeArquivo, "r");
-    if (fp == NULL)
-        return NULL;
+    if (fp == NULL) {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        return 0;
+    }
 
-    for (int i = 0; i < TAM; i++) {
-        int tamanho, qtd;
-        if (fscanf(fp, "%d %d", &tamanho, &qtd) == 2) {
-            criarEstruturaAuxiliar(i + 1, tamanho);
-            for (int j = 0; j < qtd; j++) {
-                int valor;
-                fscanf(fp, "%d", &valor);
-                inserirNumeroEmEstrutura(i + 1, valor);
+    int posicao, qtd, tamanho, valor;
+    while (fscanf(fp, "%d %d %d", &posicao, &qtd, &tamanho) == 3) {
+        if (posicao < 1 || posicao > TAM || tamanho < 0 || qtd < 0 || qtd > tamanho) {
+            printf("Dados inválidos no arquivo.\n");
+            fclose(fp);
+            return 0;
+        }
+
+        criarEstruturaAuxiliar(posicao, tamanho);
+        for (int i = 0; i < qtd; i++) {
+            if (fscanf(fp, "%d", &valor) != 1) {
+                printf("Erro ao ler valor do arquivo.\n");
+                fclose(fp);
+                return 0;
             }
+            inserirNumeroEmEstrutura(posicao, valor);
         }
     }
+
     fclose(fp);
-    return estruturaPrincipal;
+    return 1;
 }
 
 /* Salva os dados das estruturas auxiliares no arquivo 'nomeArquivo'.
@@ -318,22 +330,14 @@ estruturaAuxiliar *carregarDadosArquivo(const char *nomeArquivo) {
         return;
     }
 
-    // Para cada posição (de 1 a tamanho)
     for (int i = 0; i < tamanho; i++) {
-        // Se a estrutura auxiliar foi criada (dados != NULL)
-        if (estrutura[i].dados != NULL) {
-            // Imprime: posição (i+1), quantidade de elementos e tamanho da estrutura
-            fprintf(fp, "%d %d %d", i + 1, estrutura[i].qtd, estrutura[i].tamanho);
-            // Se houver elementos, os imprime a seguir
-            for (int j = 0; j < estrutura[i].qtd; j++) {
-                fprintf(fp, " %d", estrutura[i].dados[j]);
-            }
-            fprintf(fp, "\n");
-        } else {
-            // Se a estrutura não existe (dados == NULL), imprime posição e '0 0'
-            fprintf(fp, "%d 0 0\n", i + 1);
+        fprintf(fp, "%d %d %d", i + 1, estrutura[i].qtd, estrutura[i].tamanho);
+        for (int j = 0; j < estrutura[i].qtd; j++) {
+            fprintf(fp, " %d", estrutura[i].dados[j]);
         }
+        fprintf(fp, "\n");
     }
+
     fclose(fp);
 }
 
@@ -342,6 +346,7 @@ estruturaAuxiliar *carregarDadosArquivo(const char *nomeArquivo) {
 void finalizar() {
     const char *arquivo = "dados.txt";
     salvarDadosArquivo(estruturaPrincipal, TAM, arquivo);
+
     for (int i = 0; i < TAM; i++) {
         if (estruturaPrincipal[i].dados != NULL) {
             free(estruturaPrincipal[i].dados);
