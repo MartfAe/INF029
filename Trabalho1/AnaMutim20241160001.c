@@ -208,12 +208,12 @@ DiasMesesAnos q2(char datainicial[], char datafinal[]) {
         // Ajustando anos
         dma.qtdAnos = DataFinalQuebrada.iAno - DataInicialQuebrada.iAno;
 
-        // Imprimindo as diferenças de dias, meses e anos para depuração
+        /*// Imprimindo as diferenças de dias, meses e anos para depuração
         printf("data inicial: %d/%d/%d\n", DataInicialQuebrada.iDia, DataInicialQuebrada.iMes, DataInicialQuebrada.iAno);
         printf("data final: %d/%d/%d\n", DataFinalQuebrada.iDia, DataFinalQuebrada.iMes, DataFinalQuebrada.iAno);
         printf("QtdDias após ajuste: %d\n", dma.qtdDias);
         printf("QtdMeses após ajuste: %d\n", dma.qtdMeses);
-        printf("QtdAnos após ajuste: %d\n", dma.qtdAnos);
+        printf("QtdAnos após ajuste: %d\n", dma.qtdAnos);*/
 
         // Definindo o retorno
         dma.retorno = 1;  // Sucesso
@@ -328,8 +328,13 @@ int q4(char *strTexto, char *strBusca, int *posicoes) {
 
 int q5(int num)
 {
-
-    return num;
+  int numInvertido = 0;
+  //printf("Num original: %d\n", num);
+  while (num !=0){
+    numInvertido = numInvertido * 10 + num % 10;
+    num = num / 10;
+  }
+    return numInvertido;
 }
 
 /*
@@ -344,7 +349,23 @@ int q5(int num)
 
 int q6(int numerobase, int numerobusca)
 {
-    int qtdOcorrencias;
+    int qtdOcorrencias = 0;
+    int divisor = 1 ;
+    int buscaTemporaria= numerobusca;
+    
+    while(buscaTemporaria != 0){
+      divisor = divisor *= 10;
+      buscaTemporaria = buscaTemporaria / 10;
+    }
+    
+    while(numerobase != 0){
+      if(numerobase % divisor == numerobusca){
+        numerobase -= numerobusca;
+        qtdOcorrencias++;
+      }
+      numerobase = numerobase / 10;
+    }
+
     return qtdOcorrencias;
 }
 
