@@ -283,37 +283,35 @@ int q3(char *texto, char c, int isCaseSensitive) {
         O retorno da função, n, nesse caso seria 1;
 
  */
-int q4(char *strTexto, char *strBusca, int posicoes[30])
-{
-   int qtdOcorrencias = 0;  // Contador de ocorrências
-    int posicao = 0;         // Índice para o vetor de posições
-    
-    int textoTamanho = strlen(strTexto);
-    int buscaTamanho = strlen(strBusca);
+int q4(char *strTexto, char *strBusca, int *posicoes) {
+    int qtdOcorrencias = 0; // Contador de ocorrências
+    int tamTexto = strlen(strTexto);
+    int tamBusca = strlen(strBusca);
 
-    // Laço principal que percorre o texto
-    for (int i = 0; i <= textoTamanho - buscaTamanho; i++) {  
-        int j = 0;
+    // Percorre o texto base
+    for (int i = 0; i <= tamTexto - tamBusca; i++) {
+        int encontrou = 1; // Assume que encontrou a palavra
 
-        // Verifica correspondência da palavra com o texto
-        while (j < buscaTamanho && (i + j) < textoTamanho && strTexto[i + j] == strBusca[j]) {
-            j++;
+        // Verifica correspondência da palavra
+        for (int j = 0; j < tamBusca; j++) {
+            if (strTexto[i + j] != strBusca[j]) {
+                encontrou = 0; // Quebra se a correspondência falhar
+                break;
+            }
         }
 
-        // Se encontrou a palavra
-        if (j == buscaTamanho) {
-            if (posicao + 1 < 30) { 
-                posicoes[posicao] = i + 1;     
-                posicoes[posicao + 1] = i + j;
-                posicao += 2;                  
-            }
+        // Se a palavra foi encontrada
+        if (encontrou) {
+            int posInicio = i + 1;           
+            int posFim = i + tamBusca;       
 
-            qtdOcorrencias++;
-            i += j - 1;  
+            posicoes[qtdOcorrencias * 2] = posInicio;
+            posicoes[qtdOcorrencias * 2 + 1] = posFim;
+
+            qtdOcorrencias++; 
+            i += tamBusca - 1; 
         }
     }
-
-    // Retorna a quantidade de ocorrências encontradas
     return qtdOcorrencias;
 }
 
