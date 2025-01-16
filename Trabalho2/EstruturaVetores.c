@@ -6,7 +6,17 @@
 #include "EstruturaVetores.h"
 
 
+/*
+Objetivo: criar estrutura auxiliar na posição 'posicao'.
+com tamanho 'tamanho'
 
+Rertono (int)
+    SUCESSO - criado com sucesso
+    JA_TEM_ESTRUTURA_AUXILIAR - já tem estrutura na posição
+    POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
+    SEM_ESPACO_DE_MEMORIA - Sem espaço de memória
+    TAMANHO_INVALIDO - o tamanho deve ser maior ou igual a 1
+*/
 
 estruturaAuxiliar estruturaPrincipal[TAM];
 
@@ -44,6 +54,16 @@ int criarEstruturaAuxiliar(int posicao, int tamanho) {
     return SUCESSO;
 }
 
+/*
+Objetivo: inserir número 'valor' em estrutura auxiliar da posição 'posicao'
+Rertono (int)
+    SUCESSO - inserido com sucesso
+    SEM_ESPACO - não tem espaço
+    SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
+    POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
+CONSTANTES
+*/
+
 // Insere número na estrutura auxiliar
 int inserirNumeroEmEstrutura(int posicao, int valor) {
     if (posicao < 1 || posicao > TAM) {
@@ -64,6 +84,18 @@ int inserirNumeroEmEstrutura(int posicao, int valor) {
     return SUCESSO;
 }
 
+/*
+Objetivo: excluir o numero 'valor' da estrutura auxiliar no final da estrutura.
+ex: suponha os valores [3, 8, 7, 9,  ,  ]. Após excluir, a estrutura deve ficar da seguinte forma [3, 8, 7,  ,  ,  ].
+Obs. Esta é uma exclusão lógica
+
+Rertono (int)
+    SUCESSO - excluido com sucesso
+    ESTRUTURA_AUXILIAR_VAZIA - estrutura vazia
+    SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
+    POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
+*/
+
 // Exclui o último número de uma estrutura auxiliar
 int excluirNumeroDoFinaldaEstrutura(int posicao) {
     if (posicao < 1 || posicao > TAM) {
@@ -82,6 +114,20 @@ int excluirNumeroDoFinaldaEstrutura(int posicao) {
 
     return SUCESSO;
 }
+
+/*
+Objetivo: excluir o numero 'valor' da estrutura auxiliar da posição 'posicao'.
+Caso seja excluido, os números posteriores devem ser movidos para as posições anteriores
+ex: suponha os valores [3, 8, 7, 9,  ,  ] onde deve ser excluido o valor 8. A estrutura deve ficar da seguinte forma [3, 7, 9,  ,  ,  ]
+Obs. Esta é uma exclusão lógica
+Rertono (int)
+    SUCESSO - excluido com sucesso 'valor' da estrutura na posição 'posicao'
+    ESTRUTURA_AUXILIAR_VAZIA - estrutura vazia
+    SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
+    NUMERO_INEXISTENTE - Número não existe
+    POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
+
+*/
 
 // Exclui um número específico de uma estrutura auxiliar
 int excluirNumeroEspecificoDeEstrutura(int posicao, int valor) {
@@ -114,7 +160,16 @@ int excluirNumeroEspecificoDeEstrutura(int posicao, int valor) {
     return SUCESSO;
 }
 
-/**/
+/*
+Objetivo: retorna os números da estrutura auxiliar da posição 'posicao (1..10)'.
+os números devem ser armazenados em vetorAux
+
+Retorno (int)
+    SUCESSO - recuperado com sucesso os valores da estrutura na posição 'posicao'
+    SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
+    POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
+*/
+
 int getDadosEstruturaAuxiliar(int posicao, int vetorAux[]) {
     if (posicao < 1 || posicao > TAM) {
         return POSICAO_INVALIDA;
