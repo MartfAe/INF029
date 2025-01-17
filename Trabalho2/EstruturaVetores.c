@@ -17,6 +17,12 @@ Rertono (int)
     SEM_ESPACO_DE_MEMORIA - Sem espaço de memória
     TAMANHO_INVALIDO - o tamanho deve ser maior ou igual a 1
 */
+typedef struct{
+    int *dados;
+    int tamanho;
+    int qtd; 
+
+}estruturaAuxiliar;
 
 estruturaAuxiliar estruturaPrincipal[TAM];
 

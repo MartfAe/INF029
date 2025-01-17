@@ -15,12 +15,6 @@ typedef struct reg {
     struct reg *prox;
 } No;
 
-typedef struct{
-    int *dados;
-    int tamanho;
-    int qtd; 
-
-}estruturaAuxiliar;
 
 // Funções do programa
 
