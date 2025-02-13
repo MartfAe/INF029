@@ -317,18 +317,27 @@ estruturaAuxiliar *carregarDadosArquivo(const char *nomeArquivo) {
         perror("Erro ao abrir o arquivo para salvar dados");
         return;
     }
+
+    // Para cada posição (de 1 a tamanho)
     for (int i = 0; i < tamanho; i++) {
-        // Verifica se a estrutura auxiliar foi inicializada
+        // Se a estrutura auxiliar foi criada (dados != NULL)
         if (estrutura[i].dados != NULL) {
-            fprintf(fp, "Tamanho:%d, Qtd de elementos:%d , Dados:", estrutura[i].tamanho, estrutura[i].qtd);
+            // Imprime: posição (i+1), quantidade de elementos e tamanho da estrutura
+            fprintf(fp, "%d %d %d", i + 1, estrutura[i].qtd, estrutura[i].tamanho);
+            // Se houver elementos, os imprime a seguir
             for (int j = 0; j < estrutura[i].qtd; j++) {
                 fprintf(fp, " %d", estrutura[i].dados[j]);
             }
             fprintf(fp, "\n");
+        } else {
+            // Se a estrutura não existe (dados == NULL), imprime posição e '0 0'
+            fprintf(fp, "%d 0 0\n", i + 1);
         }
     }
     fclose(fp);
 }
+
+
 /* Finaliza o programa salvando os dados em arquivo e liberando toda a memória alocada */
 void finalizar() {
     const char *arquivo = "dados.txt";

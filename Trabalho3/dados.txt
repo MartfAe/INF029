@@ -1,3 +1,10 @@
-Tamanho:8, Qtd de elementos:2 , Dados: 1 40
-Tamanho:4, Qtd de elementos:3 , Dados: 60 -6 -7
-Tamanho:6, Qtd de elementos:3 , Dados: 5 9 32
+1 0 0
+2 2 8 1 40
+3 0 0
+4 0 0
+5 3 4 60 -6 -7
+6 0 0
+7 3 6 5 9 32
+8 0 0
+9 0 0
+10 0 0
