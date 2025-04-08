@@ -1,18 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void trocaValores(int *a, int *b){
-    int temp;
-    temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
 int main(){
-    int a, b;
-    printf("Digite o valor de a: ");
-    scanf("%d", &a);
-    printf("Digite o valor de b: ");
-    scanf("%d", &b);
-    trocaValores(&a, &b);
+    int *ptr, valor;
+    printf("Digite um valor:\n");
+    scanf("%d", &valor);
+    ptr= &valor;
+    printf("Valor final pelo ponteiro: %d\n", *ptr);
+
+    printf("Alterando o valor da variável por meio de um ponteiro...\n");
+    printf("Digite um novo valor:");
+    scanf("%d", ptr);
+    printf("Novo valor da variável:%d", valor);
+    return 0;
+
+
+
 }
