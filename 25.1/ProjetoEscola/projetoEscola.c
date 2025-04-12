@@ -69,7 +69,7 @@ void cadastrarAluno(Aluno alunos[], int *quantidade){
     }
 
     (*quantidade)++;
-    printf("Aluno cadastrado com sucesso!\n")
+    printf("Aluno cadastrado com sucesso!\n");
 
 }
 
@@ -85,7 +85,7 @@ void cadastrarProfessor(Professor professores[], int *quantidade){
     fgets(professores[*quantidade].nome, maxNome, stdin);
     size_t len =strlen(professores[*quantidade].nome);
     if(len >0 && professores[*quantidade].nome[len-1]=='\n'){
-        alunos[*quantidade].nome[len - 1]='\0';
+        professores[*quantidade].nome[len - 1]='\0';
     }
 
     printf("Data de nascimento (formato DD MM AAAA):\n");
