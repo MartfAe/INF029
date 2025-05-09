@@ -1,30 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-struct Numeros{
+typedef struct Numeros
+{   
     int num[4];
-}; 
-//Lê os numeros por meio do for e retorna na struct
-struct Numeros ler4Numeros(){
-    struct Numeros numeros;
-    for (int i=0; i<4; i++){
-        printf("Digite 4 numeros %d: ", i +1);
-        scanf("%d", &numeros.num[i]); //Armazenando em um vetor
+}Numeros;
+
+Numeros ler4Num(){
+    Numeros numeros;
+    for(int i =0; i<4; i++){
+        printf("Digite o valor %d de 4:", i+1);
+        scanf("%d", &numeros.num[i]);
     }
 
     return numeros;
 }
-// Retorno dos números lidos
+
 
 int main(){
-    struct Numeros numerosLidos = ler4Numeros();
+    Numeros numerosLidos = ler4Num();
 
-    printf("Os quatros numeros lidos: ");
-    for(int i=0; i<4; i++){
+    printf("Os 4 numeros lidos sao:");
+    for(int i =0; i<4; i++){
         printf("%d ", numerosLidos.num[i]);
     }
-    printf("\n");
 
     return 0;
-
 }

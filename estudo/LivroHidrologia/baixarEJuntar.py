@@ -4,13 +4,13 @@ from PIL import Image
 
 os.makedirs("paginas_livro", exist_ok=True)
 
-total_paginas = 431
+total_paginas = 5
 base_url = "https://livros.abrhidro.org.br/ha3/files/page/"
 
 imagens = []
 
 for i in range(1, total_paginas + 1):
-    url = f"{base_url}{i}.jpg?20210807203148"
+    url = f"{base_url}{i}.jpg"
     nome_arquivo = f"paginas_livro/pagina_{i:03}.jpg"
 
     resposta = requests.get(url)

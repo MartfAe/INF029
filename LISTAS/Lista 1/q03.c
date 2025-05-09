@@ -5,41 +5,29 @@
 
 
 //Cálculo do fatorial
-int fatorial(int n, int *erro){
-    if(n<0){
-        *erro = 1;
-        return -1;
-    }
+int fatorial(int n){
 
-    int fat = 1;
-    for (int i=1; i<=n; i++){
-    fat *= i;
+int fat;
+if(n<0){
+    printf("Nao e possivel calcular o fatorial de um numero negativo.");
+    return -1;
     }
-
-    *erro=0;
-    return fat;
+for(fat=1; n>1; n=n-1){
+            fat = fat*n ;
+     }
+     return(fat);
 }
 
 int main(){
+    int num, resultado;
 
-    setlocale(LC_ALL, "Portuguese");
-    
-    int num, resultado, erro;
-
-    //Solicitando número
-    printf("Digite um numero inteiro: ");
+    printf("Digite um valor para calcular o seu fatorial:");
     scanf("%d", &num);
+    resultado = fatorial(num);
 
-    //Chama a função para fazer o cálculo
-    resultado = fatorial(num, &erro);
-
-    //Verificando se teve erro
-    if(erro){
-        printf("Erro: Nao posso calcular o fatorial de um número negativo.\n");
+    if(resultado!= -1){
+        printf("O fatorial de %d é: %d", num, resultado);
     }else{
-        printf("O fatorial de %d = %d\n", num, resultado);
+        printf("Nao foi possível calcular o fatorial.");
     }
-
-    return 0;
-    }
-
+}

@@ -1,21 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h> 
 
-
-//Função que lê os 3 números
-int ler3Numeros(int numeros[]){
-    for(int i =0; i < 3; i++){
-        printf("Digite o numero %d: ", i+1);
+int ler3Num(int numeros[]){
+    for(int i = 0; i < 3; i++){
+        printf("Digite o %d numero:", i+1);
         scanf("%d", &numeros[i]);
     }
+
+    printf("Os numeros informados foram:");
+    for(int i = 0; i < 3; i++){
+        printf("%d ", numeros[i]);
+    }
+    return 0; // Return a valid integer value
 }
-//Impressão dos 3 números
 
 int main(){
-    int numeros[3];
-    ler3Numeros(numeros);
-
-    printf("Os numeros lidos foram: %d, %d, %d .\n", numeros[0], numeros[1], numeros[2]);
-
+    int numeros[3]; 
+    ler3Num(numeros);
     return 0;
 }
