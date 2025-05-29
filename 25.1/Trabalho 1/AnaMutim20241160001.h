@@ -11,7 +11,7 @@
 //  O aluno deve preencher seus dados abaixo, e implementar as questões do trabalho
 
 //  ----- Dados do Aluno -----
-//  Nome:
+//  Nome: Ana 
 //  email:
 //  Matrícula:
 //  Semestre:
@@ -21,7 +21,7 @@
 
 // #################################################
 #ifndef AnaMutim20241160001_H
-#define TRABALHO1_PRIMEIROULTIMONOMEMATRICULA_H
+#define AnaMutim20241160001_H
 
 typedef struct DQ
 {
@@ -51,7 +51,17 @@ int q5(int num);
 int q6(int numerobase, int numerobusca);
 int q7(char matriz[8][10], char palavra[5]);
 DataQuebrada quebraData(char data[]);
-int quantidadeDeDias(int mes, int ano);
-char normalizarAcento(char c);
+//Funções auxiliares
+int bissexto(int ano);
+
+int diasNoMes(int mes, int ano);
+
+int paraMinusculo(char ch);
+
+int calcularTamanho(char palavra[]);
+
+int procurarDirecao(char matriz[8][10], int linha, int coluna, char palavra[], int dx, int dy);
+
+void naoEspeciais(char *text);
 
 #endif  // TRABALHO1_PRIMEIROULTIMONOMEMATRICULA_H
