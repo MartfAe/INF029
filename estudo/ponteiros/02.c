@@ -11,13 +11,14 @@ int main(){
 
     if(ptr1>ptr2){
         printf("Endereço do ponteiro 1 é maior\n");
-}
-else if(ptr1==ptr2){
-    printf("Endereço possui o mesmo tamanho\n");
-}else{
-    printf("Emdndereço de ptr2 é maior");
-
-}
-
-return 0;
+        printf("Conteúdo do maior endereço: %d\n", *ptr1);
+    }
+    else if(ptr1==ptr2){
+        printf("Endereços possuem o mesmo valor\n");
+        printf("Conteúdo: %d\n", *ptr1);
+    }else{
+        printf("Endereço do ponteiro 2 é maior.\n");
+        printf("Conteúdo do maior endereço: %d\n", *ptr2);
+    }
+    return 0;
 }
