@@ -172,10 +172,19 @@ Retorno (int)
 //Jenni
 int getDadosEstruturaAuxiliar(int posicao, int vetorAux[])
 {
+ if (posicao < 1 || posicao > TAM) {
+        return POSICAO_INVALIDA;
+    }
 
-    int retorno = 0;
+    if (vetorPrincipal[posicao - 1].dados == NULL) {
+        return SEM_ESTRUTURA_AUXILIAR;
+    }
 
-    return retorno;
+    for (int i = 0; i < vetorPrincipal[posicao - 1].inseridos; i++) {
+        vetorAux[i] = vetorPrincipal[posicao - 1].dados[i];
+    }
+
+    return SUCESSO;
 }
 
 /*
@@ -223,9 +232,21 @@ Rertono (int)
 //Jenni
 int getDadosDeTodasEstruturasAuxiliares(int vetorAux[])
 {
+ int indice = 0;
 
-    int retorno = 0;
-    return retorno;
+    for (int i = 0; i < TAM; i++) {
+        if (vetorPrincipal[i].dados != NULL && vetorPrincipal[i].inseridos > 0) {
+            for (int j = 0; j < vetorPrincipal[i].inseridos; j++) {
+                vetorAux[indice++] = vetorPrincipal[i].dados[j];
+            }
+        }
+    }
+
+    if (indice == 0) {
+        return TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
+    }
+
+    return SUCESSO;
 }
 
 /*
@@ -239,9 +260,31 @@ Rertono (int)
 //Jenni
 int getDadosOrdenadosDeTodasEstruturasAuxiliares(int vetorAux[])
 {
+int indice = 0;
 
-    int retorno = 0;
-    return retorno;
+    for (int i = 0; i < TAM; i++) {
+        if (vetorPrincipal[i].dados != NULL && vetorPrincipal[i].inseridos > 0) {
+            for (int j = 0; j < vetorPrincipal[i].inseridos; j++) {
+                vetorAux[indice++] = vetorPrincipal[i].dados[j];
+            }
+        }
+    }
+
+    if (indice == 0) {
+        return TODAS_ESTRUTURAS_AUXILIARES_VAZIAS;
+    }
+
+    for (int i = 0; i < indice - 1; i++) {
+        for (int j = i + 1; j < indice; j++) {
+            if (vetorAux[i] > vetorAux[j]) {
+                int temp = vetorAux[i];
+                vetorAux[i] = vetorAux[j];
+                vetorAux[j] = temp;
+            }
+        }
+    }
+
+    return SUCESSO;
 }
 
 /*
@@ -258,9 +301,33 @@ Rertono (int)
 //Jenni
 int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho)
 {
+ if (posicao < 1 || posicao > TAM) {
+        return POSICAO_INVALIDA;
+    }
 
-    int retorno = 0;
-    return retorno;
+    if (vetorPrincipal[posicao - 1].dados == NULL) {
+        return SEM_ESTRUTURA_AUXILIAR;
+    }
+
+    if (vetorPrincipal[posicao - 1].tamanho + novoTamanho < 1) {
+        return NOVO_TAMANHO_INVALIDO;
+    }
+
+    int novoTamanhoFinal = vetorPrincipal[posicao - 1].tamanho + novoTamanho;
+    int *novoDados = realloc(vetorPrincipal[posicao - 1].dados, novoTamanhoFinal * sizeof(int));
+
+    if (novoDados == NULL) {
+        return SEM_ESPACO_DE_MEMORIA;
+    }
+
+    vetorPrincipal[posicao - 1].dados = novoDados;
+    vetorPrincipal[posicao - 1].tamanho = novoTamanhoFinal;
+
+    if (vetorPrincipal[posicao - 1].inseridos > novoTamanhoFinal) {
+        vetorPrincipal[posicao - 1].inseridos = novoTamanhoFinal;
+    }
+
+    return SUCESSO;
 }
 
 /*
@@ -275,10 +342,15 @@ Retorno (int)
 // Jenni
 int getQuantidadeElementosEstruturaAuxiliar(int posicao)
 {
+if (posicao < 1 || posicao > TAM) {
+        return POSICAO_INVALIDA;
+    }
 
-    int retorno = 0;
+    if (vetorPrincipal[posicao - 1].dados == NULL) {
+        return SEM_ESTRUTURA_AUXILIAR;
+    }
 
-    return retorno;
+    return vetorPrincipal[posicao - 1].inseridos;
 }
 
 /*
@@ -290,12 +362,39 @@ Retorno (No*)
 */
 //Jenni
 void inserirNoFim(No **cabecote, int valor){
+ No *novo = (No *)malloc(sizeof(No));
+    if (novo == NULL) {
+        printf("Erro ao alocar memória.\n");
+        return;
+    }
 
+    novo->conteudo = valor;
+    novo->prox = NULL;
+
+    if (*cabecote == NULL) {
+        *cabecote = novo;
+        return;
+    }
+
+    No *aux = *cabecote;
+    while (aux->prox != NULL) {
+        aux = aux->prox;
+    }
+    aux->prox = novo;
 }
 No *montarListaEncadeadaComCabecote()
 {
+No *cabecote = NULL;
 
-    return NULL;
+    for (int i = 0; i < TAM; i++) {
+        if (vetorPrincipal[i].dados != NULL && vetorPrincipal[i].inseridos > 0) {
+            for (int j = 0; j < vetorPrincipal[i].inseridos; j++) {
+                inserir_no_fim(&cabecote, vetorPrincipal[i].dados[j]);
+            }
+        }
+    }
+
+    return cabecote;
 }
 
 /*
