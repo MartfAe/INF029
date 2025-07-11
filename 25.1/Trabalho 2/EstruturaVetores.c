@@ -107,7 +107,7 @@ int excluirNumeroDoFinaldaEstrutura(int posicao)
     }
 
     if(vetorPrincipal[posicao-1].dados == NULL){
-        return POSICAO_INVALIDA;
+        return SEM_ESTRUTURA_AUXILIAR;
     }
     if(vetorPrincipal[posicao-1].inseridos ==0){
         return ESTRUTURA_AUXILIAR_VAZIA;
@@ -169,7 +169,7 @@ Retorno (int)
     SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
     POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
 */
-//Jenni
+
 int getDadosEstruturaAuxiliar(int posicao, int vetorAux[])
 {
  if (posicao < 1 || posicao > TAM) {
@@ -229,7 +229,7 @@ Rertono (int)
     SUCESSO - recuperado com sucesso os valores da estrutura na posição 'posicao'
     TODAS_ESTRUTURAS_AUXILIARES_VAZIAS - todas as estruturas auxiliares estão vazias
 */
-//Jenni
+
 int getDadosDeTodasEstruturasAuxiliares(int vetorAux[])
 {
  int indice = 0;
@@ -257,7 +257,7 @@ Rertono (int)
     SUCESSO - recuperado com sucesso os valores da estrutura na posição 'posicao'
     TODAS_ESTRUTURAS_AUXILIARES_VAZIAS - todas as estruturas auxiliares estão vazias
 */
-//Jenni
+
 int getDadosOrdenadosDeTodasEstruturasAuxiliares(int vetorAux[])
 {
 int indice = 0;
@@ -298,7 +298,7 @@ Rertono (int)
     NOVO_TAMANHO_INVALIDO - novo tamanho não pode ser negativo
     SEM_ESPACO_DE_MEMORIA - erro na alocação do novo valor
 */
-//Jenni
+
 int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho)
 {
  if (posicao < 1 || posicao > TAM) {
@@ -360,7 +360,7 @@ Retorno (No*)
     NULL, caso não tenha nenhum número nas listas
     No*, ponteiro para o início da lista com cabeçote
 */
-//Jenni
+
 void inserirNoFim(No **cabecote, int valor){
  No *novo = (No *)malloc(sizeof(No));
     if (novo == NULL) {
@@ -389,7 +389,7 @@ No *cabecote = NULL;
     for (int i = 0; i < TAM; i++) {
         if (vetorPrincipal[i].dados != NULL && vetorPrincipal[i].inseridos > 0) {
             for (int j = 0; j < vetorPrincipal[i].inseridos; j++) {
-                inserir_no_fim(&cabecote, vetorPrincipal[i].dados[j]);
+                inserirNoFim(&cabecote, vetorPrincipal[i].dados[j]);
             }
         }
     }
@@ -426,7 +426,10 @@ Retorno
     void.
 */
 void destruirListaEncadeadaComCabecote(No **inicio){
-     if (*inicio == NULL) {
+    printf("[DEBUG] Entrando em destruirListaEncadeadaComCabecote\n");
+
+    if (*inicio == NULL) {
+        printf("[DEBUG] Lista já está vazia\n");
         return;
     }
 
@@ -436,9 +439,10 @@ void destruirListaEncadeadaComCabecote(No **inicio){
         aux = aux->prox;
         free(temp);
     }
-    *inicio = NULL;
-}
 
+    *inicio = NULL;
+    printf("[DEBUG] Lista destruída. *inicio = NULL\n");
+}
 
 
 /*
