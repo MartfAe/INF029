@@ -169,6 +169,7 @@ Retorno (int)
     SEM_ESTRUTURA_AUXILIAR - Não tem estrutura auxiliar
     POSICAO_INVALIDA - Posição inválida para estrutura auxiliar
 */
+//Jenni
 int getDadosEstruturaAuxiliar(int posicao, int vetorAux[])
 {
 
@@ -188,11 +189,27 @@ Rertono (int)
 */
 int getDadosOrdenadosEstruturaAuxiliar(int posicao, int vetorAux[])
 {
+    if(posicao < 1 || posicao>TAM){
+        return POSICAO_INVALIDA;
+    }
 
-    int retorno = 0;
+    if(vetorPrincipal[posicao - 1].dados == NULL){
+        return SEM_ESTRUTURA_AUXILIAR;
+    }
 
-    
-    return retorno;
+    for(int i =0; i < vetorPrincipal[posicao-1].inseridos; i++){
+        vetorAux[i] = vetorPrincipal[posicao-1].dados[i];
+    }
+    int inseridos= vetorPrincipal[posicao - 1].inseridos;
+    for(int i = 0; i < inseridos -1; i++){
+        for(int j =i+1; j<inseridos; j++){
+            if(vetorAux[i]>vetorAux[j]){
+                int temp = vetorAux[i];
+                vetorAux[i]= vetorAux[j];
+            }
+        }
+    } 
+    return SUCESSO;   
 }
 
 /*
@@ -203,6 +220,7 @@ Rertono (int)
     SUCESSO - recuperado com sucesso os valores da estrutura na posição 'posicao'
     TODAS_ESTRUTURAS_AUXILIARES_VAZIAS - todas as estruturas auxiliares estão vazias
 */
+//Jenni
 int getDadosDeTodasEstruturasAuxiliares(int vetorAux[])
 {
 
@@ -218,6 +236,7 @@ Rertono (int)
     SUCESSO - recuperado com sucesso os valores da estrutura na posição 'posicao'
     TODAS_ESTRUTURAS_AUXILIARES_VAZIAS - todas as estruturas auxiliares estão vazias
 */
+//Jenni
 int getDadosOrdenadosDeTodasEstruturasAuxiliares(int vetorAux[])
 {
 
@@ -236,6 +255,7 @@ Rertono (int)
     NOVO_TAMANHO_INVALIDO - novo tamanho não pode ser negativo
     SEM_ESPACO_DE_MEMORIA - erro na alocação do novo valor
 */
+//Jenni
 int modificarTamanhoEstruturaAuxiliar(int posicao, int novoTamanho)
 {
 
@@ -252,6 +272,7 @@ Retorno (int)
     ESTRUTURA_AUXILIAR_VAZIA - estrutura auxiliar vazia
     Um número int > 0 correpondente a quantidade de elementos preenchidos da estrutura
 */
+// Jenni
 int getQuantidadeElementosEstruturaAuxiliar(int posicao)
 {
 
@@ -267,6 +288,10 @@ Retorno (No*)
     NULL, caso não tenha nenhum número nas listas
     No*, ponteiro para o início da lista com cabeçote
 */
+//Jenni
+void inserirNoFim(No **cabecote, int valor){
+
+}
 No *montarListaEncadeadaComCabecote()
 {
 
@@ -277,8 +302,21 @@ No *montarListaEncadeadaComCabecote()
 Objetivo: retorna os números da lista enceada com cabeçote armazenando em vetorAux.
 Retorno void
 */
-void getDadosListaEncadeadaComCabecote(No *inicio, int vetorAux[])
-{
+void getDadosListaEncadeadaComCabecote(No *inicio, int vetorAux[]) {
+    if (inicio == NULL) {
+        printf("A lista encadeada está vazia.\n");
+        return;
+    }
+
+    int i = 0;
+    No *aux = inicio;
+
+    // Percorre a lista encadeada e armazena os valores no vetor
+    while (aux != NULL) {
+        vetorAux[i] = aux->conteudo;
+        aux = aux->prox;
+        i++;
+    }
 }
 
 /*
@@ -288,8 +326,18 @@ O ponteiro inicio deve ficar com NULL.
 Retorno 
     void.
 */
-void destruirListaEncadeadaComCabecote(No **inicio)
-{
+void destruirListaEncadeadaComCabecote(No **inicio){
+     if (*inicio == NULL) {
+        return;
+    }
+
+    No *aux = *inicio;
+    while (aux != NULL) {
+        No *temp = aux;
+        aux = aux->prox;
+        free(temp);
+    }
+    *inicio = NULL;
 }
 
 
@@ -300,6 +348,11 @@ para poder liberar todos os espaços de memória das estruturas auxiliares.
 
 */
 
-void finalizar()
-{
+void finalizar(){
+    for (int i = 0; i < TAM; i++) {
+        if (vetorPrincipal[i].dados != NULL) {
+            free(vetorPrincipal[i].dados);
+            vetorPrincipal[i].dados = NULL;
+        }
+    }
 }
